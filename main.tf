@@ -187,6 +187,11 @@ resource "aws_db_instance" "kn-db" {
   publicly_accessible       = false
 }
 
+### Retrieving the Secret containing the private key
+data "aws_secretsmanager_secret_version" "private_key" {
+  secret_id = "my-private-key-secret"
+}
+
 resource "aws_instance" "web_server" {
   count = 2
   associate_public_ip_address = false
@@ -213,7 +218,7 @@ resource "aws_instance" "web_server" {
   connection {
     type        = "ssh"
     user        = "ec2-user"
-    private_key = "${var.private_key}"
+    private_key = "${data.aws_secretsmanager_secret_version.private_key.secret_string}"
   }
 }
   
