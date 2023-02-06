@@ -196,6 +196,27 @@ resource "aws_instance" "web_server" {
   subnet_id              = var.subnet_id[count.index]
   tags                   = var.tags
   key_name               = "knakov_ec2"
+  
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum update -y",
+      "sudo amazon-linux-extras install php7.4",
+      "sudo yum install -y httpd php php-mysqlnd",
+      "sudo systemctl start httpd",
+      "sudo systemctl enable httpd",
+      "sudo yum install -y mysql",
+      "sudo systemctl start mysqld",
+      "sudo systemctl enable mysqld"
+    ]
+  }
+
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = "${var.private_key}"
+  }
+}
+  
 }
 
 
