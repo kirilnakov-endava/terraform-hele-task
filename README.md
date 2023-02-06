@@ -16,4 +16,4 @@ I have created a total of 4 subnets, two public, two private with behind the pri
 I have created two security groups. One default for allowing HTTP and SSH traffic to the instances which the ALB is also using and one SG for the RDS instance.
 
 ## EC2 instance
-Initially I wanted to use custom modules on the ec2 but it became difficult due to the "count" argument being incorporated with the other resources so I used resource block for the EC2. I have used provisioner block and connection block in the resource block, but I have stepped into some errors in the creation of it so I had done those steps manually.
+Initially I wanted to use custom modules on the ec2 but it became difficult due to the "count" argument being incorporated with the other resources so I used resource block for the EC2. I have used provisioner block and connection block in the resource block, but I have stepped into some errors in the creation of it so I had done those steps manually. Mainly the issue I had was with the count.index in regars to the connection block "host" part as it created a cycle error
